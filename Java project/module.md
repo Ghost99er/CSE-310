@@ -97,7 +97,7 @@ Note that `IM` stands for Individual Module and `TP` stands for Team Project.
 |Date      |Start Time|IM or TP|Description                                 |Hours:Minutes|
 |----------|----------|--------|--------------------------------------------|-------------|
 |     5/6  |  12:00PM | IM     |  Worked on the java project                |  5 Hours    |
-|     5/9  |  8:00 PM | IM     |  Finalized project                         |             |
+|     5/9  |  8:00 PM | IM     |  Finalized project                         |1 hour 30 min|
 |          |          |        |                                            |             |
 |          |          |        |                                            |             |
 |          |          |        |                                            |             |
@@ -110,19 +110,19 @@ _Note: Add more rows as needed._
 
 This section should be filled out at the end of the Sprint and submitted.
 
-1. Put your GitHub link for your demonstration software here: 
+1. Put your GitHub link for your demonstration software here: https://github.com/Ghost99er/CSE-310.git
 
-2. Put your YouTube link for your code walkthrough and demo video here:
+2. Put your YouTube link for your code walkthrough and demo video here: https://youtu.be/QTlepY5xdkM
 
 3. Complete the following checklist by either indicating "Yes" or "No". If you indicate "No" then provide an explanation of why beneath the table.
 
 |Question                                                    |Response|
 |------------------------------------------------------------|--------|
 |Are the links above public and working?                     |        |
-|Did you complete all the unique requirements for the module?|        |
-|Did you write at least 100 lines of code?                   |        |
-|Did you fully complete the readme.md file?                  |        |
-|Did you put the readme.md file in GitHub in the top folder? |        |
+|Did you complete all the unique requirements for the module?|   YES  |
+|Did you write at least 100 lines of code?                   |   YES  |
+|Did you fully complete the readme.md file?                  |   YES  |
+|Did you put the readme.md file in GitHub in the top folder? |   YES  |
 
 4. If you completed a Stretch Challenge (as shown in the Module Description document in Canvas) then describe what you did.  If you did the Choose Your Own Adventure module, then you get to decide what qualifies as a Stretch Challenge.
 
