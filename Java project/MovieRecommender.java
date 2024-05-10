@@ -42,22 +42,17 @@ public class MovieRecommender {
             }
         }
     }
-
     static Scanner scanner = new Scanner(System.in);
     static HashMap<String, User> users = new HashMap<>();
-
-    static ArrayList<Movie> recommendMovies(ArrayList<Movie> movies, String genre) {
-        ArrayList<Movie> recommendations = new ArrayList<>();
-        for (Movie movie : movies) {
-            if (movie.genre.equals(genre)) {
-                recommendations.add(movie);
-            }
-        }
-        return recommendations;
-    }
+    static ArrayList<Movie> movies = new ArrayList<>();
 
     public static void main(String[] args) {
-        ArrayList<Movie> movies = createMovieList();
+        initializeMovieList();
+        runMovieRecommender();
+        scanner.close();
+    }
+
+    static void initializeMovieList() {
         movies.add(new Movie("12 Angry Men", "Drama", 5));
         movies.add(new Movie("2001: A Space Odyssey", "Science Fiction", 5));
         movies.add(new Movie("A Beautiful Mind", "Biography", 4));
@@ -125,111 +120,133 @@ public class MovieRecommender {
         movies.add(new Movie("The Dark Knight", "Action", 5));
         movies.add(new Movie("The Exorcist", "Horror", 5));
         movies.add(new Movie("The Godfather", "Crime", 5));
-        
-
-        
-        // Loop to remove duplicates
-  for (int i = movies.size() - 1; i >= 0; i--) {
-    Movie movie = movies.get(i);
-    boolean foundDuplicate = false;
-    for (int j = 0; j < i; j++) {
-      if (movies.get(j).equals(movie)) {
-        foundDuplicate = true;
-        break;
-      }
     }
-    if (foundDuplicate) {
-      movies.remove(i);
-    }
-  }
 
+        static void runMovieRecommender() {
+            while (true) {
+                System.out.println("Are you a new user or a returning user? (new/returning)");     
 
-        while (true) {
-            System.out.println("Are you a new user or a returning user? (new/return)");
-            String userType = scanner.nextLine();
-
-            if (userType.equalsIgnoreCase("new")) {
-                System.out.println("Enter your name:");
-                String userName = scanner.nextLine();
-                System.out.println("What genre do you prefer (Crime, Drama, Action, Fantasy, Science Fiction, Thriller, History, Animation, Biography, Mystery, Romance, War, Western, Comedy)?");
-                String preferredGenre = scanner.nextLine();
-
-                User newUser = new User(userName, preferredGenre);
-                users.put(userName, newUser);
-
-                recommendAndWatchMovies(movies, newUser);
-
-            } else if (userType.equalsIgnoreCase("return")) {
-                System.out.println("Select your name:");
-                for (String userName : users.keySet()) {
-                    System.out.println("* " + userName);
-                }
-                String userName = scanner.nextLine();
-                if (users.containsKey(userName)) {
-                    User returningUser = users.get(userName);
-                    recommendAndWatchMovies(movies, returningUser);
+                String userType = scanner.nextLine();
+    
+                if (userType.equalsIgnoreCase("new")) {
+                    newUserRoutine();
+                } else if (userType.equalsIgnoreCase("returning")) {
+                    returningUserRoutine();
                 } else {
-                    System.out.println("User not found. Please try again.");
+                    System.out.println("Invalid input. Please enter 'new' or 'returning'.");
                 }
-            } else {
-                System.out.println("Invalid input. Please enter 'new' or 'return'.");
-            }
-
-            System.out.println("Do you want to go back to menu? (yes/no)");
-            String continueChoice = scanner.nextLine();
-            if (!continueChoice.equalsIgnoreCase("yes")) {
-                break;
+        
+                System.out.println("Do you want to go back to menu? (yes/no)");
+                String continueChoice = scanner.nextLine();
+                if (!continueChoice.equalsIgnoreCase("yes")) {
+                    break;
+                }
             }
         }
-
-        scanner.close();
-    }
-
-    static ArrayList<Movie> createMovieList() {
-        ArrayList<Movie> movies = new ArrayList<>();
-        // Add movies here
-        return movies;
-    }
-
-    static void recommendAndWatchMovies(ArrayList<Movie> movies, User user) {
-        while (true) {
-            ArrayList<Movie> recommendedMovies = recommendMovies(movies, user.preferredGenre);
-            if (recommendedMovies.isEmpty()) {
-                System.out.println("No movies found in your preferred genre.");
-            } else {
-                System.out.println("Here are some recommendations for you, " + user.name + ":");
-                for (Movie movie : recommendedMovies) {
-                    System.out.println("* " + movie.title + " (" + movie.genre + ")");
+    
+        static void newUserRoutine() {
+            System.out.println("Enter your name:");
+            String userName = scanner.nextLine();
+            System.out.println("What genre do you prefer (Crime, Drama, Action, Fantasy, Science Fiction, Thriller, History, Animation, Biography, Mystery, Romance, War, Western, Comedy)?");
+            String userInput = scanner.nextLine();
+            String preferredGenre = null;
+    
+            String[] genres = {"Crime", "Drama", "Action", "Fantasy", "Science Fiction", "Thriller", "History", "Animation", "Biography", "Mystery", "Romance", "War", "Western", "Comedy"};
+    
+            for (String genre : genres) {
+                if (userInput.equalsIgnoreCase(genre)) {
+                    preferredGenre = genre;
+                    break;
                 }
-                System.out.println("Did you watch any movie from the recommendation? (yes/no)");
-                String watchedChoice = scanner.nextLine();
-                if (watchedChoice.equalsIgnoreCase("yes")) {
-                    System.out.println("Enter the title of the movie you watched:");
-                    String watchedMovieTitle = scanner.nextLine();
+            }
+    
+            if (preferredGenre != null) {
+                System.out.println("You entered: '" + userInput + "'. Recognized genre: " + preferredGenre);
+            } else {
+                System.out.println("Genre not recognized. Did you mean one of these? " + String.join(", ", genres));
+            }
+    
+            User newUser = new User(userName, preferredGenre);
+            users.put(userName, newUser);
+    
+            recommendAndWatchMovies(newUser);
+        }
+    
+        static void returningUserRoutine() {
+            System.out.println("Select your name:");
+            for (String userName : users.keySet()) {
+                System.out.println("* " + userName);
+            }
+            String userName = scanner.nextLine();
+            if (users.containsKey(userName)) {
+                User returningUser = users.get(userName);
+                recommendAndWatchMovies(returningUser);
+            } else {
+                System.out.println("User not found. Please try again.");
+            }
+        }
+    
+        static ArrayList<Movie> recommendMovies(String genre) {
+            ArrayList<Movie> recommendations = new ArrayList<>();
+            int counter = 1;
+            for (Movie movie : movies) {
+                if (movie.genre.equalsIgnoreCase(genre)) {
+                    recommendations.add(movie);
+                    System.out.println(counter + ". " + movie.title + " (" + movie.genre + ")");
+                    counter++;
+                }
+            }
+            return recommendations;
+        }
+    
+        static void recommendAndWatchMovies(User user) {
+            while (true) {
+                ArrayList<Movie> recommendedMovies = recommendMovies(user.preferredGenre);
+    
+                if (!recommendedMovies.isEmpty()) {
+                    System.out.println("Here are some recommendations for you, " + user.name + ":");
+    
                     for (Movie movie : recommendedMovies) {
-                        if (movie.title.equalsIgnoreCase(watchedMovieTitle)) {
-                            user.watchMovie(movie);
-                            System.out.println("Added " + watchedMovieTitle + " to your watched history.");
-                            break;
+                        System.out.println(recommendedMovies.indexOf(movie) + 1 + ". " + movie.title + " (" + movie.genre + ")");
+                    }
+    
+                    System.out.println("Did you watch any movie from the recommendation? (yes/no)");
+                    String watchedChoice = scanner.nextLine();
+                    if (watchedChoice.equalsIgnoreCase("yes")) {
+                        System.out.println("Enter the number or title of the movie you watched:");
+                        String watchedMovie = scanner.nextLine();
+                        boolean found = false;
+                        for (Movie movie : recommendedMovies) {
+                            if (watchedMovie.equalsIgnoreCase(movie.title) || watchedMovie.equals(String.valueOf(recommendedMovies.indexOf(movie) + 1))) {
+                                user.watchMovie(movie);
+                                System.out.println("Added " + movie.title + " to your watched history.");
+                                found = true;
+                                break;
+                            }
                         }
+                        if (!found) {
+                            System.out.println("Movie not found. Please enter a valid number or title.");
+                        }
+                    } else {
+                        break;
                     }
                 }
-            }
     
-            System.out.println("Do you want to see your watch history? (yes/no)");
-            String watchHistoryChoice = scanner.nextLine();
-            if (watchHistoryChoice.equalsIgnoreCase("yes")) {
-                user.showWatchHistory();
-            }
+                System.out.println("Do you want to see your watch history? (yes/no)");
+                String watchHistoryChoice = scanner.nextLine();
+                if (watchHistoryChoice.equalsIgnoreCase("yes")) {
+                    user.showWatchHistory();
+                }
     
-            System.out.println("Do you want new recommendations? (yes/no)");
-            String newRecommendationChoice = scanner.nextLine();
-            if (!newRecommendationChoice.equalsIgnoreCase("yes")) {
-                break;
+                System.out.println("Do you want new recommendations? (yes/no)");
+                String newRecommendationChoice = scanner.nextLine();
+                if (!newRecommendationChoice.equalsIgnoreCase("yes")) {
+                    break;
+                }
+    
+                System.out.println("What genre do you prefer (Crime, Drama, Action, Fantasy, Science Fiction, Thriller, History, Animation, Biography, Mystery, Romance, War, Western, Comedy)?");
+                user.preferredGenre = scanner.nextLine();
             }
-            
-            System.out.println("What genre do you prefer (Crime, Drama, Action, Fantasy, Science Fiction, Thriller, History, Animation, Biography, Mystery, Romance, War, Western, Comedy)?");
-            user.preferredGenre = scanner.nextLine();
         }
     }
-}    
+          
