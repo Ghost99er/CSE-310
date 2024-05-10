@@ -118,7 +118,7 @@ This section should be filled out at the end of the Sprint and submitted.
 
 |Question                                                    |Response|
 |------------------------------------------------------------|--------|
-|Are the links above public and working?                     |        |
+|Are the links above public and working?                     |   YES  |
 |Did you complete all the unique requirements for the module?|   YES  |
 |Did you write at least 100 lines of code?                   |   YES  |
 |Did you fully complete the readme.md file?                  |   YES  |
