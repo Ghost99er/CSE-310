@@ -132,7 +132,9 @@ This section should be filled out at the end of the Sprint and submitted.
 
 |Activity         |Total Hours:Minutes|
 |-----------------|-------------------|
-|Individual Module|                   |
+|Individual Module|       6 hours and 30 min            |
 
 7. What strategies (behavioral and technical) worked well during this Sprint?  What did not work well?  List some possible ways that you can improve next Sprint.
 
+all worked well I used the tools provided for more to complete the project
+things I could imporve is clean up the inputs and make API list so it pulls from the internet
