@@ -120,7 +120,29 @@ public class MovieRecommender {
         movies.add(new Movie("The Dark Knight", "Action", 5));
         movies.add(new Movie("The Exorcist", "Horror", 5));
         movies.add(new Movie("The Godfather", "Crime", 5));
-    }
+        movies.add(new Movie("Dune", "Science Fiction", 5));
+        movies.add(new Movie("OPPENHEIMER", "History", 5));
+        movies.add(new Movie("SPIDER-MAN: ACROSS THE SPIDER-VERSE", "Animation", 5));
+        movies.add(new Movie("BARBIE", "Comedy", 5));
+        movies.add(new Movie("GODZILLA MINUS ONE", "Action", 5));
+        movies.add(new Movie("Train to Busian", "Thriller", 5));
+        movies.add(new Movie("A Silent Voice", "Animation", 5));
+        movies.add(new Movie("Jurassic Park", "Thriller", 5));
+        movies.add(new Movie("La La Land", "Romance", 5));
+        movies.add(new Movie("Avengers Infinity War", "War", 5));
+        movies.add(new Movie("Ready Player One", "Science Fiction", 5));
+        movies.add(new Movie("Inception", "Science Fiction", 5));
+        movies.add(new Movie("Star Wars: The Phantom Menace", "Fantasy", 5));
+        movies.add(new Movie("The Notebook", "Romance", 5));
+        movies.add(new Movie("Crazy Rich Asians", "Romance", 5));
+        movies.add(new Movie("The RM", "Romance", 5));
+        movies.add(new Movie("Guardians of the Galaxy: Vol. 3", "Science Fiction", 5));
+        movies.add(new Movie("Pride and Prejudice", "Romance", 5));
+        movies.add(new Movie("Arthur and the Invisibles", "Fantasy", 5));
+        movies.add(new Movie("Frozen", "Kids", 4));
+        movies.add(new Movie("Cars", "Kids", 5));
+        movies.add(new Movie("The Phantom Of The Opera", "Romance", 5));
+     }
 
         static void runMovieRecommender() {
             while (true) {
@@ -147,11 +169,11 @@ public class MovieRecommender {
         static void newUserRoutine() {
             System.out.println("Enter your name:");
             String userName = scanner.nextLine();
-            System.out.println("What genre do you prefer (Crime, Drama, Action, Fantasy, Science Fiction, Thriller, History, Animation, Biography, Mystery, Romance, War, Western, Comedy)?");
+            System.out.println("What genre do you prefer (Crime, Drama, Action, Fantasy, Science Fiction, Thriller, History, Animation, Biography, Mystery, Romance, War, Western, Comedy, Kids)?");
             String userInput = scanner.nextLine();
             String preferredGenre = null;
     
-            String[] genres = {"Crime", "Drama", "Action", "Fantasy", "Science Fiction", "Thriller", "History", "Animation", "Biography", "Mystery", "Romance", "War", "Western", "Comedy"};
+            String[] genres = {"Crime", "Drama", "Action", "Fantasy", "Science Fiction", "Thriller", "History", "Animation", "Biography", "Mystery", "Romance", "War", "Western", "Comedy", "Kids"};
     
             for (String genre : genres) {
                 if (userInput.equalsIgnoreCase(genre)) {
