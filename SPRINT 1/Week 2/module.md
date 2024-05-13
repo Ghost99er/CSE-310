@@ -1,6 +1,6 @@
 # CSE 310 - Module Report
 
-Name:
+Name: Daniel Stockton
 
 ## Part 1 - Module Planning
 
