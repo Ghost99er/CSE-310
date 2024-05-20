@@ -1,4 +1,0 @@
-This is a sample text file.
-It is used to demonstrate reading from a local file in a networked application.
-Feel free to change the content of this file.
-
