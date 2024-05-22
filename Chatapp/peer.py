@@ -2,16 +2,6 @@ import socket
 import threading
 from tkinter import *
 
-# Predefined server IP and port
-#Change the SERVER_IP in the peer.py script to the IP address of the machine that will run the server.
-#Press Win + R, type cmd, and press Enter.
-#Type ipconfig and press Enter
-#Look for the "IPv4 Address" under the network connection you are using (e.g., Wi-Fi or Ethernet). This is the IP address you will use.
-# SERVER_IP = "example"  # Replace with the actual IP address of the server machine
-
-SERVER_IP = "127.0.0.1"  # Use localhost for local testing; change as needed
-SERVER_PORT = 9999
-
 def handle_client(client_socket, text_widget):
     while True:
         try:
@@ -23,11 +13,13 @@ def handle_client(client_socket, text_widget):
             break
     client_socket.close()
 
-def start_server(text_widget):
+def start_server(text_widget, server_ip_entry, server_port_entry):
+    server_ip = server_ip_entry.get()
+    server_port = int(server_port_entry.get())
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((SERVER_IP, SERVER_PORT))
+    server.bind((server_ip, server_port))
     server.listen(5)
-    text_widget.insert(END, "Server started, waiting for connections...\n")
+    text_widget.insert(END, f"Server started on {server_ip}:{server_port}, waiting for connections...\n")
 
     while True:
         client_socket, addr = server.accept()
@@ -40,9 +32,11 @@ def send_message(peer_socket, message_entry, username):
     peer_socket.send(message.encode("utf-8"))
     message_entry.delete(0, END)
 
-def connect_to_server(text_widget, message_entry, username):
+def connect_to_server(text_widget, server_ip_entry, server_port_entry, message_entry, username):
+    server_ip = server_ip_entry.get()
+    server_port = int(server_port_entry.get())
     peer_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    peer_socket.connect((SERVER_IP, SERVER_PORT))
+    peer_socket.connect((server_ip, server_port))
     
     threading.Thread(target=receive_messages, args=(peer_socket, text_widget)).start()
 
@@ -60,6 +54,47 @@ def receive_messages(peer_socket, text_widget):
             break
     peer_socket.close()
 
+def show_instructions():
+    instructions = Toplevel(root)
+    instructions.title("Instructions")
+    text_widget = Text(instructions, wrap="word", width=50, height=20)
+    text_widget.pack()
+
+    instructions_text = """
+    Instructions for Running the Peer-to-Peer Chat Application
+
+    If you haven't already, install PyInstaller using pip:
+    CMD: pip install pyinstaller
+
+Make sure the Host and clients are all on the same network (WI-FI)
+
+    Running the Server (Host):
+    1. Click on peer.exe
+    2. Enter Server Details:
+       - Server IP: Enter the IP address of the server machine. 
+         To find your IP address:
+         - Press Win + R, type cmd, and press Enter.
+         - Type ipconfig and press Enter.
+         - Look for the "IPv4 Address" under the network connection you are using (e.g., Wi-Fi or Ethernet).
+       - Server Port: Enter a port number (use 9999)
+    3. Start the Server:
+       Click the "Start Server" button. The server will start, and you should see a message in the text area indicating that the server is waiting for connections.
+
+    Running the Client (User):
+    1. Click on peer.exe
+    2. Enter Client Details:
+       - Username: Enter a unique username.
+       - Server IP: Enter the IP address of the server machine (same IP entered by the server).
+       - Server Port: Enter a port number (use 9999)
+    3. Connect to the Server:
+       Click the "Connect to Server" button. The client will connect to the server, and you should see a message indicating the connection is successful.
+    4. Send Messages:
+       Type your message in the message entry field and click the "Send" button to send the message. All connected clients will see the message.
+    """
+
+    text_widget.insert(END, instructions_text)
+    text_widget.config(state=DISABLED)
+
 def main():
     global root
     root = Tk()
@@ -72,14 +107,25 @@ def main():
     username_entry.insert(0, "Enter Username")
     username_entry.pack()
 
+    server_ip_entry = Entry(root)
+    server_ip_entry.insert(0, "Enter Server IP")
+    server_ip_entry.pack()
+
+    server_port_entry = Entry(root)
+    server_port_entry.insert(0, "Enter Server Port")
+    server_port_entry.pack()
+
     message_entry = Entry(root)
     message_entry.pack()
 
-    start_button = Button(root, text="Start Server", command=lambda: threading.Thread(target=start_server, args=(text_widget,)).start())
+    start_button = Button(root, text="Start Server", command=lambda: threading.Thread(target=start_server, args=(text_widget, server_ip_entry, server_port_entry)).start())
     start_button.pack()
 
-    connect_button = Button(root, text="Connect to Server", command=lambda: connect_to_server(text_widget, message_entry, username_entry.get()))
+    connect_button = Button(root, text="Connect to Server", command=lambda: connect_to_server(text_widget, server_ip_entry, server_port_entry, message_entry, username_entry.get()))
     connect_button.pack()
+
+    instructions_button = Button(root, text="Show Instructions", command=show_instructions)
+    instructions_button.pack()
 
     root.mainloop()
 
