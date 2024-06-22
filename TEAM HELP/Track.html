@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Track</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #336699;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #4da6ff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 500px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: white;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .credits {
+            font-size: 18px;
+            color: white;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .credits input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .credits input::placeholder {
+            color: #999;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Select Your Track!</h1>
+        <div class="option">
+            <input type="radio" id="winter" name="track" value="winter">
+            <label for="winter">Winter</label>
+        </div>
+        <div class="option">
+            <input type="radio" id="spring" name="track" value="spring">
+            <label for="spring">Spring</label>
+        </div>
+        <div class="option">
+            <input type="radio" id="fall" name="track" value="fall">
+            <label for="fall">Fall</label>
+        </div>
+        <div class="credits">
+            <label for="credits">How many credits a semester would you like to take?</label>
+            <input type="text" id="credits" placeholder="? - ??">
+        </div>
+    </div>
+
+</body>
+</html>
